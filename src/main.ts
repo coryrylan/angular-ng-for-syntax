@@ -1,16 +1,27 @@
-import './polyfills';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { bootstrapApplication } from '@angular/platform-browser';
+import 'zone.js';
 
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <h1>Angular ngFor demo</h1>
+    <p>
+      <a href="https://coryrylan.com/blog/angular-ng-for-syntax ">Tutorial at coryrylan.com</a>
+    </p>
+    <ul>
+      <li *ngFor="let item of items; let i = index">
+        {{i}}. {{item}}
+      </li>
+    </ul>
 
-import { AppModule } from './app/app.module';
+  `,
+})
+export class App {
+  items = ['First', 'Second', 'Third'];
+}
 
-platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
-  // Ensure Angular destroys itself on hot reloads.
-  if (window['ngRef']) {
-    window['ngRef'].destroy();
-  }
-  window['ngRef'] = ref;
-
-  // Otherise, log the boot error
-}).catch(err => console.error(err));
+bootstrapApplication(App);
